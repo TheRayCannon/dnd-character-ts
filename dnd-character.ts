@@ -7,8 +7,6 @@ export class DnDCharacter {
     charisma: number;
     hitpoints: number;
 
-
-
     constructor() {
 
         this.strength = DnDCharacter.generateAbilityScore();
@@ -17,6 +15,7 @@ export class DnDCharacter {
         this.intelligence = DnDCharacter.generateAbilityScore();;
         this.wisdom = DnDCharacter.generateAbilityScore();
         this.charisma = DnDCharacter.generateAbilityScore();
+        this.hitpoints = 10 + DnDCharacter.getModifierFor(this.constitution)
 
     }
 
@@ -25,7 +24,7 @@ export class DnDCharacter {
     }
 
     static topthreeRolls() {
-        let diceRoll: number[] = []
+        const diceRoll: number[] = []
         while (diceRoll.length < 4) {
             diceRoll.push(this.numberGenerator())
         }
@@ -34,11 +33,14 @@ export class DnDCharacter {
     }
 
     static generateAbilityScore() {
-        let topThree = this.topthreeRolls()
+        const topThree = this.topthreeRolls()
             .reduce((runningTotal: number, nextNumber: number) => runningTotal + nextNumber, 0)
         return topThree
     }
 
+    static getModifierFor(constitution: number) {
+        return Math.floor((constitution - 10) / 2)
+    }
 
 
 
